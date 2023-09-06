@@ -5,6 +5,9 @@ import jenkins.docker.DockerPush
 import jenkins.docker.DockerRegistryConnect
 import jenkins.docker.DockerRegistryLogout
 
+
+
+
 def call(body) {
     /* evaluate the body block, and collect configuration into the object */
     def pipelineParams= [:]
@@ -12,6 +15,7 @@ def call(body) {
     body.delegate = pipelineParams
     body()
 
+    def Docker = new jenkins.docker.DockerUtils()
     
     /******** Begining declarative Pipeline **********************/
     pipeline {
@@ -35,7 +39,7 @@ def call(body) {
             steps {
 			  withCredentials([string(credentialsId: 'CI_BUILD_TOKEN', variable: 'CI_BUILD_TOKEN')]) {
                 script {
-                    DockerRegistryConnect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
+                    Docker.connect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
                     DockerPull(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
                     DockerBuild(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
                 }   
