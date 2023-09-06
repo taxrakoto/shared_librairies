@@ -1,12 +1,10 @@
-import jenkins.docker.DockerBuild
+/*import jenkins.docker.DockerBuild
 import jenkins.docker.DockerComposeUp
 import jenkins.docker.DockerPull
 import jenkins.docker.DockerPush
 import jenkins.docker.DockerRegistryConnect
 import jenkins.docker.DockerRegistryLogout
-
-
-
+*/
 
 def call(body) {
     /* evaluate the body block, and collect configuration into the object */
@@ -14,7 +12,8 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
-
+    
+    /* import utilities from src */
     def Docker = new jenkins.docker.DockerUtils()
     
     /******** Begining declarative Pipeline **********************/
@@ -40,8 +39,8 @@ def call(body) {
 			  withCredentials([string(credentialsId: 'CI_BUILD_TOKEN', variable: 'CI_BUILD_TOKEN')]) {
                 script {
                     Docker.connect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
-                    DockerPull(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
-                    DockerBuild(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
+                    Docker.pull(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
+                    Docker.build(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
                 }   
               }
             }
@@ -50,7 +49,7 @@ def call(body) {
 		stage('Push image') {  
 	        when  { branch pipelineParams.BRANCH}
             steps {
-                script { DockerPush(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE) }
+                script { Docker.push(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE) }
             }
         }
 		
@@ -58,8 +57,8 @@ def call(body) {
             when  { branch pipelineParams.BRANCH}
             steps {
                 script {
-                    DockerComposeUp()
-                    DockerRegistryLogout(pipelineParams.CI_REGISTRY)
+                    Docker.composeUp()
+                    Docker.Logout(pipelineParams.CI_REGISTRY)
                 }
             }
         }
