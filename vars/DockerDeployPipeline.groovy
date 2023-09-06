@@ -35,7 +35,7 @@ def call(body) {
             steps {
 			  withCredentials([string(credentialsId: 'CI_BUILD_TOKEN', variable: 'CI_BUILD_TOKEN')]) {
                 script {
-                    DockerRegistryConnect(${CI_BUILD_TOKEN},pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
+                    DockerRegistryConnect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
                     DockerPull(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
                     DockerBuild(pipelineParams.CI_REGISTRY_IMAGE,pipelineParams.CI_REGISTRY_BUILD_IMAGE)
                 }   
