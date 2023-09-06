@@ -1,4 +1,4 @@
-@Library('my-shared-library') _
+@Library('pipelines_UGD') _
 
 DockerDeployPipeline { 
     LABEL = ''
