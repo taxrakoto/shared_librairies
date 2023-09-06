@@ -1,0 +1,10 @@
+@Library('my-shared-library') _
+
+DockerDeployPipeline { 
+    LABEL = ''
+    BRANCH = ''
+    CI_REGISTRY = ''
+    CI_REGISTRY_IMAGE = ''
+    CI_REGISTRY_BUILD_IMAGE = ''
+    CI_BUILD_USERNAME = ''
+}
