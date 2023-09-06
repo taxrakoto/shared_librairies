@@ -3,8 +3,8 @@
 DockerDeployPipeline { 
     LABEL = ''
     BRANCH = ''
-    CI_REGISTRY = ''
-    CI_REGISTRY_IMAGE = ''
+    CI_REGISTRY = 'registry.gitlab.com'
+    CI_REGISTRY_IMAGE = 'registry.gitlab.com/ugd-mg/${sub-folder}/${project_name}:staging'
     CI_REGISTRY_BUILD_IMAGE = ''
-    CI_BUILD_USERNAME = ''
+    CI_BUILD_USERNAME = 'token-registry'
 }

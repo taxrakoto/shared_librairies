@@ -1,5 +1,6 @@
 package jenkins.docker
 
+/********************* Build images ****************************************************/
 def build(String IMAGE, String BUILD_IMAGE){   
     
     if (BUILD_IMAGE == "") {
@@ -18,12 +19,13 @@ def build(String IMAGE, String BUILD_IMAGE){
     }
 }
 
+/********************** launch Compose ****************************************************/
 def composeUp(){   
     sh """
      sudo docker compose pull && sudo docker compose up -d
     """
 }
-
+/********************************************************************************************/
 def pull(String IMAGE, String BUILD_IMAGE){   
     
     if (BUILD_IMAGE == "") {
@@ -41,7 +43,7 @@ def pull(String IMAGE, String BUILD_IMAGE){
       }
     }
 }
-
+/**********************************************************************************************/
 def push(String IMAGE, String BUILD_IMAGE){   
     
     if (BUILD_IMAGE == "") {
@@ -59,15 +61,16 @@ def push(String IMAGE, String BUILD_IMAGE){
       }
     }
 }
-
+/*************************************************************************************************/
 def connect(String TOKEN, String REGISTRY, String USERNAME){   
     sh """
      sudo docker login -u ${USERNAME} -p ${TOKEN} ${REGISTRY}
     """
 }
-
+/*************************************************************************************************/
 def Logout(String REGISTRY){   
     sh """
      sudo docker logout ${REGISTRY}
     """
 }
+/**************************************************************************************************/

@@ -1,36 +1,20 @@
-/*import jenkins.docker.DockerBuild
-import jenkins.docker.DockerComposeUp
-import jenkins.docker.DockerPull
-import jenkins.docker.DockerPush
-import jenkins.docker.DockerRegistryConnect
-import jenkins.docker.DockerRegistryLogout
-*/
-
 def call(body) {
-    /* evaluate the body block, and collect configuration into the object */
+    /********* evaluate the body block && collect configuration into the object ***********/
     def pipelineParams= [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = pipelineParams
     body()
     
-    /* import utilities from src */
+    /*************** import utilities from src ********************************************/
     def Docker = new jenkins.docker.DockerUtils()
+
+
     
-    /******** Begining declarative Pipeline **********************/
+    /********************** Begining declarative Pipeline **********************************/
     pipeline {
     agent {label pipelineParams.LABEL}    
-           
-
-    /******   Variables
-        LABEL
-        BRANCH
-        CI_REGISTRY='registry.gitlab.com'
-        CI_REGISTRY_IMAGE = 'registry.gitlab.com/ugd-mg/equivalence_dipl-me/equivalence_api:staging'      
-        CI_REGISTRY_BUILD_IMAGE = 'registry.gitlab.com/ugd-mg/equivalence_dipl-me/equivalence_api:build-staging'    
-	    CI_BUILD_USERNAME = 'token-registry'
-    
-    ********/
-
+          
+   
     stages {
         
 		stage('Build image') {
@@ -65,4 +49,4 @@ def call(body) {
     }
    }
 }
-
+ /************************************ end of Pipeline **************************************/
