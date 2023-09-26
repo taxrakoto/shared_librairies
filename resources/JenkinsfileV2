@@ -1,0 +1,19 @@
+@Library('pipelines_UGD') _
+
+DockerDeployPipelineV2 { 
+    CI_REGISTRY = 'registry.gitlab.com'
+    CI_REGISTRY_IMAGE = 'registry.gitlab.com/ugd-mg/${sub-folder}/${project_name}:staging'
+    CI_BUILD_USERNAME = 'token-registry'
+    BRANCH_STAGING = ''
+    LABEL_STAGING = ''
+    IMAGE_STAGING = ''
+    BUILD_IMAGE_STAGING = ''
+    STAGING_DOCKERFILE = ''
+    STAGING_COMPOSE = ''
+    BRANCH_PROD = ''
+    LABEL_PROD = ''
+    IMAGE_PROD = ''
+    BUILD_IMAGE_PROD = ''
+    PROD_DOCKERFILE = ''
+    PROD_COMPOSE = ''
+}
