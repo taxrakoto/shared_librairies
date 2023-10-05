@@ -12,7 +12,7 @@ def call(body) {
     
     /********************** Begining declarative Pipeline **********************************/
     pipeline {
-    agent any   
+    agent none   
           
    
     stages {
