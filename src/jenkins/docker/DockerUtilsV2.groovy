@@ -21,9 +21,19 @@ def build(String IMAGE, String BUILD_IMAGE, String DOCKERFILE){
 
 /********************** launch Compose ****************************************************/
 def composeUp(String COMPOSE){   
-    sh """
-     sudo docker compose -f ${COMPOSE} pull && sudo docker compose -f ${COMPOSE} up -d
-    """
+    if (COMPOSE == "") {
+      script {
+        sh """
+            echo " skipping deploy: no compose files provided"
+        """
+      }
+    } else {
+      script {
+        sh """
+            sudo docker compose -f ${COMPOSE} pull && sudo docker compose -f ${COMPOSE} up -d
+        """
+      }
+    }
 }
 /********************************************************************************************/
 def pull(String IMAGE, String BUILD_IMAGE){   
