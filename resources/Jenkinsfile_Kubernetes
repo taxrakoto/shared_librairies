@@ -1,0 +1,22 @@
+@Library('pipelines_UGD') _
+
+KubernetesDeployPipelineV2 {
+    CI_REGISTRY = 'registry.gitlab.com'
+    CI_BUILD_USERNAME = 'token-registry'
+
+    BRANCH_STAGING = 'develop'
+    LABEL_STAGING = 'dev_staging'
+    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/izaho/izaho-backend:staging'
+    DEPLOYMENT_STAGING=''
+    CONTAINER_STAGING=''
+    STAGING_DOCKERFILE = 'Dockerfile'
+   
+
+    BRANCH_PROD = ''
+    LABEL_PROD = 'dev_staging'
+    IMAGE_PROD = ''
+    DEPLOYMENT_PROD=''
+    CONTAINER_PROD=''
+    PROD_DOCKERFILE = ''
+    
+}
