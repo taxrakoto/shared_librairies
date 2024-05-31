@@ -61,7 +61,7 @@ def call(body) {
 		
 	    stage('Deploy production App') {
             when  { branch pipelineParams.BRANCH_PROD}
-            agent {label kubernetes}
+            agent {label 'kubernetes'}
             steps {
                 script {
                     Kube.rollout(pipelineParams.IMAGE_PROD, pipelineParams.DEPLOYMENT_PROD, pipelineParams.CONTAINER_PROD)
