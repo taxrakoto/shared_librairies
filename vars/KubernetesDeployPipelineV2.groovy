@@ -35,7 +35,7 @@ def call(body) {
 		
 	    stage('Deploy Staging App') {
             when  { branch pipelineParams.BRANCH_STAGING}
-            agent {label kubernetes}
+            agent {label 'kubernetes'}
             steps {
                 script {
                     Kube.rollout(pipelineParams.IMAGE_STAGING, pipelineParams.DEPLOYMENT_STAGING, pipelineParams.CONTAINER_STAGING)
