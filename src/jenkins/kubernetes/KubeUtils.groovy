@@ -6,9 +6,8 @@ def build(String IMAGE, String DOCKERFILE){
       
       script {
         sh """
-            VERSION=${IMAGE}-v${BUILD_NUMBER}
-            sudo docker build -f ${DOCKERFILE} -t ${VERSION} .
-            sudo docker push ${VERSION}
+            sudo docker build -f ${DOCKERFILE} -t ${IMAGE}-v${BUILD_NUMBER} .
+            sudo docker push ${IMAGE}-v${BUILD_NUMBER}
         """
       }
     
@@ -19,8 +18,7 @@ def rollout(String IMAGE, String DEPLOYMENT, String CONTAINER){
         
         script {
           sh """
-            VERSION=${IMAGE}-v${BUILD_NUMBER}
-            kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=${VERSION}
+            kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=${IMAGE}-v${BUILD_NUMBER}
            """
         }
 }
