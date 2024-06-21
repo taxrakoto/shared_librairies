@@ -14,11 +14,11 @@ def build(String IMAGE, String DOCKERFILE){
 }
 
 /****************** deploy images *************************************************************/
-def rollout(String IMAGE, String DEPLOYMENT, String CONTAINER){
+def rollout(String IMAGE, String DEPLOYMENT, String CONTAINER, String NAMESPACE){
         
         script {
           sh """
-            kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=${IMAGE}-v${BUILD_NUMBER}
+            kubectl set image deployment/${DEPLOYMENT} ${CONTAINER}=${IMAGE}-v${BUILD_NUMBER} -n ${NAMESPACE}
            """
         }
 }

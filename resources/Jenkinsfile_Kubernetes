@@ -10,6 +10,7 @@ KubernetesDeployPipelineV2 {
     DEPLOYMENT_STAGING=''
     CONTAINER_STAGING=''
     STAGING_DOCKERFILE = 'Dockerfile'
+    STAGING_NAMESPACE =
    
 
     BRANCH_PROD = ''
@@ -18,5 +19,6 @@ KubernetesDeployPipelineV2 {
     DEPLOYMENT_PROD=''
     CONTAINER_PROD=''
     PROD_DOCKERFILE = ''
+    PROD_NAMESPACE = '' 
     
 }

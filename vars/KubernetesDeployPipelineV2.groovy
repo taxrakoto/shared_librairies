@@ -38,7 +38,7 @@ def call(body) {
             agent {label 'kubernetes'}
             steps {
                 script {
-                    Kube.rollout(pipelineParams.IMAGE_STAGING, pipelineParams.DEPLOYMENT_STAGING, pipelineParams.CONTAINER_STAGING)
+                    Kube.rollout(pipelineParams.IMAGE_STAGING, pipelineParams.DEPLOYMENT_STAGING, pipelineParams.CONTAINER_STAGING, pipelineParams.STAGING_NAMESPACE)
                 }
             }
         }
@@ -64,7 +64,7 @@ def call(body) {
             agent {label 'kubernetes'}
             steps {
                 script {
-                    Kube.rollout(pipelineParams.IMAGE_PROD, pipelineParams.DEPLOYMENT_PROD, pipelineParams.CONTAINER_PROD)
+                    Kube.rollout(pipelineParams.IMAGE_PROD, pipelineParams.DEPLOYMENT_PROD, pipelineParams.CONTAINER_PROD, pipelineParams.PROD_NAMESPACE)
                 }
             }
         }
