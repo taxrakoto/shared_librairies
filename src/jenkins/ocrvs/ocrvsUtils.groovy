@@ -19,7 +19,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         }
         sh 'rm .properties'
         
-        def secret = ${propertiesMap[SECRET_NAME]}
+        def secret = propertiesMap[SECRET_NAME]
 
         // DEBUGGING
         sh """
