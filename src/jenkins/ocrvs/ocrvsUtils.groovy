@@ -13,6 +13,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
     withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
         // read the secret file into a map
         sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
+        sh ' cat .properties'
         script {
             def props = readProperties file :'.properties'
             props.each { key, value -> propertiesMap[key] = value }
