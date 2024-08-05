@@ -19,16 +19,19 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         }
         sh 'rm .properties'
         
+        def secret = ${propertiesMap[SECRET_NAME]}
+
         // DEBUGGING
         sh """
             echo "secret name is $SECRET_NAME "
             echo "secret value is ${propertiesMap[SECRET_NAME]}"
+            echo " new secret variable content is $secret "
         """
         
         // END OF DEBUGGING
-        
+        /*
         // check if the secret is empty
-        if (!${propertiesMap[SECRET_NAME]}) {
+        if (!propertiesMap[SECRET_NAME]) {
             error("Secret is empty. Make sure you have added the secret to the Jenkins credentials.")
         }
         // encrypt the secret using Openssl
@@ -41,7 +44,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
      
         // return the result
         return encodedEncryptedSecret
-         
+         */
      }  
 }
 /****************************************************************************************************/
