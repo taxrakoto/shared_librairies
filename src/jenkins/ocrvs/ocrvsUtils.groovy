@@ -19,8 +19,8 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         
         // DEBUGGING
         sh """
-            echo "secret = env."${SECRET_NAME}""
-            echo "key = env."${KEY_NAME}""
+            echo "secret = ${env.${SECRET_NAME}}"
+            echo "key = ${env.${KEY_NAME}}"
         """
         // END OF DEBUGGING
         
