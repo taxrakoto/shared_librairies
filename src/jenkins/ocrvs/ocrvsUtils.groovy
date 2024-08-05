@@ -10,18 +10,19 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
     // read  the secret file of the env (qa|staging|prod) and store the contents
     // in a local file
     withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
-        // create env variables of the secrets
-        sh ' touch .properties && cat ${ENV_SECRET_FILE} > .properties'
+        // read the secret file into a map
+        sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
         script {
             def props = readProperties file :'.properties'
-            props.each { key, value -> env."${key}" = value }
+            def propertiesMap = [:]
+            props.each { key, value -> propertiesMap[key] = value }
         }
         
         // DEBUGGING
         sh """
             echo "properties file" && cat .properties
-            echo " secret: $API_KEY "
-            echo " key: ${KEY_NAME} "
+            echo " secret name is $SECRET_NAME "
+            echo " secret value is ${propertiesMap[$SECRET_NAME]} "
             echo "DEBUG secret  = ${env.SECRET_NAME}"
             echo "DEBUG key = ${env.KEY_NAME}"
         """
