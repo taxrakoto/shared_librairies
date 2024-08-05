@@ -29,7 +29,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         """
         
         // END OF DEBUGGING
-        /*
+        
         // check if the secret is empty
         if (!propertiesMap[SECRET_NAME]) {
             error("Secret is empty. Make sure you have added the secret to the Jenkins credentials.")
@@ -37,14 +37,14 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         // encrypt the secret using Openssl
         def encryptedSecretFile = "${workspace}/encrypted_key.bin"
         sh """
-           echo -n "${SECRET_NAME}" | openssl enc -aes-256-cbc -pbkdf2 -salt -k "${KEY_NAME}" -out ${encryptedSecretFile}
+           echo -n "${propertiesMap[SECRET_NAME]}" | openssl enc -aes-256-cbc -pbkdf2 -salt -k propertiesMap[KEY_NAME] -out ${encryptedSecretFile}
         """       
         // Encode the encrypted secret in Base64
         def encodedEncryptedSecret = sh(script: "base64 < ${encryptedSecretFile}", returnStdout: true).trim()
      
         // return the result
         return encodedEncryptedSecret
-         */
+        
      }  
 }
 /****************************************************************************************************/
