@@ -18,7 +18,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
             def props = readProperties file :'.properties'
             props.each { key, value -> propertiesMap[key] = value }
         }
-        
+        /*
         // DEBUGGING
         sh """
             echo "properties file" && cat .properties"
@@ -28,7 +28,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
             echo "DEBUG key = ${env.KEY_NAME}"
         """
         // END OF DEBUGGING
-        /*
+        
         // check if the secret is empty
         if (!env.SECRET_NAME) {
             error("Secret is empty. Make sure you have added the secret to the Jenkins credentials.")
