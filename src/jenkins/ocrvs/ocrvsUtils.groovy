@@ -21,14 +21,13 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         
         def secret = propertiesMap[SECRET_NAME]
 
-        // DEBUGGING
+        /* DEBUGGING
         sh """
             echo "secret name is $SECRET_NAME "
             echo "secret value is ${propertiesMap[SECRET_NAME]}"
             echo " new secret variable content is $secret "
         """
-        
-        // END OF DEBUGGING
+        END OF DEBUGGING */
         
         // check if the secret is empty
         if (!propertiesMap[SECRET_NAME]) {
