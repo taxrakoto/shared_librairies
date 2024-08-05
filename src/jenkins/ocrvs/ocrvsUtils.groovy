@@ -19,7 +19,8 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         
         // DEBUGGING
         sh """
-            echo "DEBUG secret = ${env.SECRET_NAME}"
+            echo "properties file" && cat .properties
+            echo "DEBUG secret  = ${env.SECRET_NAME}"
             echo "DEBUG key = ${env.KEY_NAME}"
         """
         // END OF DEBUGGING
