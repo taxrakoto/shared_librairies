@@ -8,7 +8,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
     // and has all the  variables and secrets in its content
     
     // read  the secret file of the env (qa|staging|prod) and store the contents
-    // in a local file
+    // in a map
     def propertiesMap = [:]
     withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
         // read the secret file into a map
@@ -17,6 +17,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
             def props = readProperties file :'.properties'
             props.each { key, value -> propertiesMap[key] = value }
         }
+        sh 'rm .properties'
         
         // DEBUGGING
         sh """
@@ -24,11 +25,11 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
             echo "secret name is $SECRET_NAME "
             echo "secret value is ${propertiesMap[SECRET_NAME]}"
         """
-        /*
+        
         // END OF DEBUGGING
         
         // check if the secret is empty
-        if (!env.SECRET_NAME) {
+        if (!${propertiesMap[SECRET_NAME]}) {
             error("Secret is empty. Make sure you have added the secret to the Jenkins credentials.")
         }
         // encrypt the secret using Openssl
@@ -41,7 +42,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
      
         // return the result
         return encodedEncryptedSecret
-        */    
+         
      }  
 }
 /****************************************************************************************************/
