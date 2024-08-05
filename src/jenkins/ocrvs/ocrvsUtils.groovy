@@ -22,7 +22,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         sh """
             echo "properties file" && cat .properties
             echo "secret name is $SECRET_NAME "
-            echo "secret value is {propertiesMap[SECRET_NAME]}"
+            echo "secret value is ${propertiesMap[SECRET_NAME]}"
         """
         /*
         // END OF DEBUGGING
