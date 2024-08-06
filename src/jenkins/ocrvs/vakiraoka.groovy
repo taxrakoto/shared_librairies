@@ -120,3 +120,74 @@ pipeline {
         }
     }
 }
+//////////////////////////////////////////////////////////////////////////////////
+
+pipeline {
+    agent any
+    environment {
+        DISK_SPACE = 'your-disk-space' // You need to replace 'your-disk-space' with the actual disk space value or set it in Jenkins
+        ENCRYPTION_KEY = credentials('ENCRYPTION_KEY')
+        DOCKER_USERNAME = credentials('DOCKER_USERNAME')
+        DOCKER_TOKEN = credentials('DOCKER_TOKEN')
+        MONGODB_ADMIN_USER = credentials('MONGODB_ADMIN_USER')
+        MONGODB_ADMIN_PASSWORD = credentials('MONGODB_ADMIN_PASSWORD')
+        BACKUP_ENCRYPTION_PASSPHRASE = credentials('BACKUP_ENCRYPTION_PASSPHRASE')
+        ELASTICSEARCH_SUPERUSER_PASSWORD = credentials('ELASTICSEARCH_SUPERUSER_PASSWORD')
+        SSH_HOST = 'your-ssh-host' // Replace with actual SSH host
+        SSH_USER = credentials('SSH_USER')
+    }
+    stages {
+        stage('Set variables for ansible') {
+            steps {
+                script {
+                    def envMap = [
+                        encrypted_disk_size: "${env.DISK_SPACE}",
+                        disk_encryption_key: "${env.ENCRYPTION_KEY}",
+                        dockerhub_username: "${env.DOCKER_USERNAME}",
+                        dockerhub_password: "${env.DOCKER_TOKEN}",
+                        mongodb_admin_username: "${env.MONGODB_ADMIN_USER}",
+                        mongodb_admin_password: "${env.MONGODB_ADMIN_PASSWORD}",
+                        backup_encryption_passphrase: "${env.BACKUP_ENCRYPTION_PASSPHRASE}",
+                        elasticsearch_superuser_password: "${env.ELASTICSEARCH_SUPERUSER_PASSWORD}",
+                        manager_production_server_ip: "${env.SSH_HOST}",
+                        ansible_user: "${env.SSH_USER}"
+                    ]
+                    def jsonWithNewlines = new groovy.json.JsonBuilder(envMap).toPrettyString()
+                    def jsonWithoutNewlines = jsonWithNewlines.replaceAll(/\n/, "")
+                    env.EXTRA_VARS = jsonWithoutNewlines
+                }
+            }
+        }
+        stage('Read known hosts') {
+            steps {
+                script {
+                    dir("${env.JOB_NAME}") {
+                        sh """
+                        echo "KNOWN_HOSTS<<EOF" >> ${env.WORKSPACE}/known_hosts.env
+                        sed -i -e '\$a\\' ./infrastructure/known-hosts
+                        cat ./infrastructure/known-hosts >> ${env.WORKSPACE}/known_hosts.env
+                        echo "EOF" >> ${env.WORKSPACE}/known_hosts.env
+                        """
+                    }
+                }
+            }
+        }
+        stage('Run playbook') {
+            environment {
+                ANSIBLE_PERSISTENT_COMMAND_TIMEOUT = 10
+                ANSIBLE_SSH_TIMEOUT = 10
+                ANSIBLE_SSH_RETRIES = 5
+            }
+            steps {
+                script {
+                    sh """
+                    ansible-playbook playbook.yml \
+                    -i inventory/${env.ENVIRONMENT}.yml \
+                    --verbose \
+                    --extra-vars '${env.EXTRA_VARS}'
+                    """
+                }
+            }
+        }
+    }
+}

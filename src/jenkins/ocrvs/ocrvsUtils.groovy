@@ -1,5 +1,20 @@
 package jenkins.ocrvs
 
+
+/************************************************************************************************************/
+def fetchEnv(String ENV_ID)
+    def envMap = [:]
+    withCredentials([file(credentialsId: ENV_ID, variable: 'ENV_SECRET_FILE')]) {
+        // read the secret file into a map
+        sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
+        script {
+            def props = readProperties file :'.properties'
+            props.each { key, value -> envMap[key] = value }
+        }
+        sh 'rm .properties'
+        return envMap
+    }
+
 /****************************************************************************************************/
 /*** Fetch secret defined in the environment (or server) and ecrypt it using encryption key **/
 def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
@@ -9,16 +24,17 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
     
     // read  the secret file of the env (qa|staging|prod) and store the contents
     // in a map
-    def propertiesMap = [:]
-    withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
-        // read the secret file into a map
-        sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
-        script {
-            def props = readProperties file :'.properties'
-            props.each { key, value -> propertiesMap[key] = value }
-        }
-        sh 'rm .properties'
+    // def propertiesMap = [:]
+    // withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
+    //     // read the secret file into a map
+    //     sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
+    //     script {
+    //         def props = readProperties file :'.properties'
+    //         props.each { key, value -> propertiesMap[key] = value }
+    //     }
+    //     sh 'rm .properties'
         
+        def propertiesMap = fetchEnv(ENV)
         def secret = propertiesMap[SECRET_NAME]
 
         // check if the secret is empty
