@@ -12,8 +12,8 @@ def fetchEnv(String ENV_ID) {
             props.each { key, value -> envMap[key] = value }
         }
         sh 'rm .properties'
-        return envMap
     }
+    return envMap
 }
 
 /****************************************************************************************************/
