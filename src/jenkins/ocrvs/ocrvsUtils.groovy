@@ -5,7 +5,7 @@ package jenkins.ocrvs
 def fetchEnv(String ENV_ID) {
     def envMap = [:]
     withCredentials([file(credentialsId: ENV_ID, variable: 'ENV_SECRET_FILE')]) {
-        // read the secret file into a map
+        // read and write the secret file into a map
         sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
         script {
             def props = readProperties file :'.properties'
@@ -23,19 +23,6 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
     // make sure that a secret file with the ENV as its name exists in jenkins
     // and has all the  variables and secrets in its content
     
-    // read  the secret file of the env (qa|staging|prod) and store the contents
-    // in a map
-    /*
-    def propertiesMap = [:]
-    withCredentials([file(credentialsId: ENV, variable: 'ENV_SECRET_FILE')]) {
-        // read the secret file into a map
-        sh 'touch .properties && cat ${ENV_SECRET_FILE} > .properties'
-        script {
-            def props = readProperties file :'.properties'
-            props.each { key, value -> propertiesMap[key] = value }
-        }
-        sh 'rm .properties'
-    */    
         def propertiesMap = fetchEnv(ENV)
         def secret = propertiesMap[SECRET_NAME]
 
@@ -53,6 +40,5 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         // return the result
         return encodedEncryptedSecret
         
-     //}  
 }
 /****************************************************************************************************/
