@@ -2,7 +2,7 @@ package jenkins.ocrvs
 
 
 /************************************************************************************************************/
-def fetchEnv(String ENV_ID)
+def fetchEnv(String ENV_ID) {
     def envMap = [:]
     withCredentials([file(credentialsId: ENV_ID, variable: 'ENV_SECRET_FILE')]) {
         // read the secret file into a map
@@ -14,6 +14,7 @@ def fetchEnv(String ENV_ID)
         sh 'rm .properties'
         return envMap
     }
+}
 
 /****************************************************************************************************/
 /*** Fetch secret defined in the environment (or server) and ecrypt it using encryption key **/
