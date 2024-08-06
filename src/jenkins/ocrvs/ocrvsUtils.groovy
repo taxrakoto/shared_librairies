@@ -27,10 +27,8 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         }
         // encrypt the secret using Openssl
         def encryptedSecretFile = "${workspace}/encrypted_key.bin"
-        //sh """
-        //   echo -n "${propertiesMap[SECRET_NAME]}" | openssl enc -aes-256-cbc -pbkdf2 -salt -k ${propertiesMap[KEY_NAME]} -out ${encryptedSecretFile}
-        //"""
         sh(script: "echo -n ${propertiesMap[SECRET_NAME]} | openssl enc -aes-256-cbc -pbkdf2 -salt -k ${propertiesMap[KEY_NAME]} -out ${encryptedSecretFile}", returnStdout: false)
+        
         // Encode the encrypted secret in Base64
         def encodedEncryptedSecret = sh(script: "base64 < ${encryptedSecretFile}", returnStdout: true).trim()
      
