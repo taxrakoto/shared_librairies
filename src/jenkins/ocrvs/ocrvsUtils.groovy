@@ -11,7 +11,7 @@ def fetchEnv(String ENV_ID) {
             def props = readProperties file :'.properties'
             props.each { key, value -> envMap[key] = value }
         }
-        sh 'rm .properties'
+        sh 'echo "cleaning up" && rm .properties'
     }
     return envMap
 }
