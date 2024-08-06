@@ -30,7 +30,7 @@ def get_secret(String ENV, String SECRET_NAME, String KEY_NAME){
         //sh """
         //   echo -n "${propertiesMap[SECRET_NAME]}" | openssl enc -aes-256-cbc -pbkdf2 -salt -k ${propertiesMap[KEY_NAME]} -out ${encryptedSecretFile}
         //"""
-        sh(script: echo -n propertiesMap[SECRET_NAME] | openssl enc -aes-256-cbc -pbkdf2 -salt -k propertiesMap[KEY_NAME] -out ${encryptedSecretFile}, returnStdout: true)
+        sh(script: "echo -n propertiesMap[SECRET_NAME] | openssl enc -aes-256-cbc -pbkdf2 -salt -k propertiesMap[KEY_NAME] -out ${encryptedSecretFile}", returnStdout: true)
         // Encode the encrypted secret in Base64
         def encodedEncryptedSecret = sh(script: "base64 < ${encryptedSecretFile}", returnStdout: true).trim()
      
