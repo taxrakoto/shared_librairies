@@ -13,6 +13,18 @@ def build(String IMAGE, String DOCKERFILE){
     
 }
 
+/********************* build and push but without build number ****************************/
+def buildnoTag(String IMAGE, String DOCKERFILE){   
+      
+      script {
+        sh """
+            sudo docker build -f ${DOCKERFILE} -t ${IMAGE} .
+            sudo docker push ${IMAGE}
+        """
+      }
+    
+}
+
 /****************** deploy images *************************************************************/
 def rollout(String IMAGE, String DEPLOYMENT, String CONTAINER, String NAMESPACE){
         

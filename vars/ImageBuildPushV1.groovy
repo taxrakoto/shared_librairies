@@ -24,7 +24,7 @@ def call(body) {
 			  withCredentials([string(credentialsId: 'CI_BUILD_TOKEN', variable: 'CI_BUILD_TOKEN')]) {
                 script {
                     Docker.connect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
-                    Kube.build(pipelineParams.IMAGE_STAGING, pipelineParams.STAGING_DOCKERFILE)
+                    Kube.buildnoTag(pipelineParams.IMAGE_STAGING, pipelineParams.STAGING_DOCKERFILE)
                     Docker.Logout(pipelineParams.CI_REGISTRY)
                 }   
               }
@@ -39,7 +39,7 @@ def call(body) {
 			  withCredentials([string(credentialsId: 'CI_BUILD_TOKEN', variable: 'CI_BUILD_TOKEN')]) {
                 script {
                     Docker.connect("${CI_BUILD_TOKEN}",pipelineParams.CI_REGISTRY, pipelineParams.CI_BUILD_USERNAME)
-                    Kube.build(pipelineParams.IMAGE_PROD, pipelineParams.PROD_DOCKERFILE)
+                    Kube.buildnoTag(pipelineParams.IMAGE_PROD, pipelineParams.PROD_DOCKERFILE)
                     Docker.Logout(pipelineParams.CI_REGISTRY)
                 }   
               }
