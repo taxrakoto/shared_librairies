@@ -1,0 +1,17 @@
+@Library('pipelines_UGD') _
+
+ImageBuildPushV1 {
+    CI_REGISTRY = 'registry.gitlab.com'
+    CI_BUILD_USERNAME = 'token-registry'
+
+    BRANCH_STAGING = 'develop'
+    STAGING_SERVER = 'dev_staging'
+    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/izaho/izaho-backend:staging'
+    STAGING_DOCKERFILE = 'Dockerfile'
+   
+    BRANCH_PROD = ''
+    PROD_SERVER = 'dev_staging'
+    IMAGE_PROD = ''
+    PROD_DOCKERFILE = ''
+    
+}
