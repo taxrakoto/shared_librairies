@@ -1,0 +1,8 @@
+@Library('pipelines_UGD') _
+
+ContinuousIntegrationPipeline {
+    BUILD_CONTEXT = '.'
+    DOCKERFILE = 'Dockerfile'
+    REGISTRY_URL = 'registry.gitlab/com/ugd-mg/project'
+    IMAGE_TAG = 'staging'
+}
