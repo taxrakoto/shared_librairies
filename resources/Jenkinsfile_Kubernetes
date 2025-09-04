@@ -6,7 +6,7 @@ KubernetesDeployPipelineV2 {
 
     BRANCH_STAGING = 'develop'
     LABEL_STAGING = 'dev_staging'
-    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/izaho/izaho-backend:staging'
+    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/${sub-folder}/${project_name}:staging'
     DEPLOYMENT_STAGING=''
     CONTAINER_STAGING=''
     STAGING_DOCKERFILE = 'Dockerfile'

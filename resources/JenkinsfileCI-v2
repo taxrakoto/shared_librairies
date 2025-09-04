@@ -3,6 +3,6 @@
 ContinuousIntegrationPipeline {
     BUILD_CONTEXT = '.'
     DOCKERFILE = 'Dockerfile'
-    REGISTRY_URL = 'registry.gitlab/com/ugd-mg/project'
+    REGISTRY_URL = 'registry.gitlab.com/ugd-mg/${sub-folder}/${project_name}:staging'
     IMAGE_TAG = 'staging'
 }

@@ -6,7 +6,7 @@ ImageBuildPushV1 {
 
     BRANCH_STAGING = 'develop'
     STAGING_SERVER = 'dev_staging'
-    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/izaho/izaho-backend:staging'
+    IMAGE_STAGING = 'registry.gitlab.com/ugd-mg/${sub-folder}/${project_name}:staging'
     STAGING_DOCKERFILE = 'Dockerfile'
    
     BRANCH_PROD = ''
