@@ -33,20 +33,20 @@ Centralizes CI/CD workflows so teams can share and maintain pipeline logic consi
 
 ## 🚀 Available Pipelines
 
-### 🔹 `DockerDeployPipeline`
+### 🔹 `DockerDeployPipeline.groovy`
 - Builds and pushes a Docker image to a registry.  
 - Uses Jenkins credential: **`CI_bUILD_Token`**.
 
-### 🔹 `DockerDeployPipelineV2`
+### 🔹 `DockerDeployPipelineV2.groovy`
 - Extends `DockerDeployPipeline` with **two phases**: `staging` and `production`.
 
-### 🔹 `imagebuildPush`
+### 🔹 `ImageBuildPushV1.groovy`
 - Single-stage pipeline to **build & push in one go**.
 
-### 🔹 `KubernetesDeployPipelineV2`
+### 🔹 `KubernetesDeployPipelineV2.groovy`
 - Builds and pushes a Docker image, then deploys to a Kubernetes cluster using **kubectl**.
 
-### 🔹 `K8SContinousIntegrationPipeline`
+### 🔹 `K8SContinousIntegrationPipeline.groovy`
 - For **Jenkins running inside Kubernetes**.  
 - Uses a **Kaniko-based pod template** labeled `docker`.
 
