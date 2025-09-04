@@ -1,59 +1,76 @@
 # Jenkins Shared Libraries
 
-This repository provides a collection of reusable Jenkins pipeline functions for building, pushing, and deploying Docker images, as well as integrating with Kubernetes.  
+![Jenkins](https://img.shields.io/badge/Jenkins-Pipeline-blue?logo=jenkins&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Deploy-326CE5?logo=kubernetes&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-It is designed to centralize CI/CD workflows so that multiple Jenkins pipelines can share the same logic, improving maintainability and consistency across projects.
+Reusable Jenkins Shared Library providing pipelines for **Docker build & push** and **Kubernetes deployments**.  
+Centralizes CI/CD workflows so teams can share and maintain pipeline logic consistently.
+
+---
+
+## 📑 Table of Contents
+
+- [📂 Project Structure](#-project-structure)
+- [🚀 Available Pipelines](#-available-pipelines)
+- [⚙️ Requirements](#️-requirements)
+- [🔑 Credentials](#-credentials)
+- [📖 Usage](#-usage)
+- [🧩 Examples](#-examples)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
 
 ---
 
 ## 📂 Project Structure
 
-- **`vars/`** – Contains pipeline functions accessible in Jenkinsfiles.
-- **`src/Jenkins/`** – Houses helper methods used internally by the pipelines.
-- **`resources/`** – Example Jenkinsfiles demonstrating how to use the shared library.
+- **`vars/`** – Pipeline entrypoints (Groovy functions).
+- **`src/Jenkins/`** – Helper methods used by pipelines.
+- **`resources/`** – Example Jenkinsfiles.
 
 ---
 
 ## 🚀 Available Pipelines
 
-### 🔹 DockerDeployPipeline
-- Builds and pushes a Docker image to a container registry.
-- Requires a Jenkins credential with ID: **`CI_bUILD_Token`**.
+### 🔹 `DockerDeployPipeline`
+- Builds and pushes a Docker image to a registry.  
+- Uses Jenkins credential: **`CI_bUILD_Token`**.
 
-### 🔹 DockerDeployPipelineV2
-- Similar to `DockerDeployPipeline`, but supports **two phases**: `staging` and `production`.
+### 🔹 `DockerDeployPipelineV2`
+- Extends `DockerDeployPipeline` with **two phases**: `staging` and `production`.
 
-### 🔹 imagebuildPush
-- A simplified pipeline to **build and push in a single stage**.
+### 🔹 `imagebuildPush`
+- Single-stage pipeline to **build & push in one go**.
 
-### 🔹 KubernetesDeployPipelineV2
-- Builds and pushes a Docker image, then deploys it to a Kubernetes cluster using **imperative `kubectl` commands**.
+### 🔹 `KubernetesDeployPipelineV2`
+- Builds and pushes a Docker image, then deploys to a Kubernetes cluster using **kubectl**.
 
-### 🔹 K8SContinousIntegrationPipeline
-- Designed for **Jenkins hosted inside a Kubernetes cluster**.
-- Uses a pod template (label: **`docker`**) and leverages the **Kaniko** image for building and pushing container images.
+### 🔹 `K8SContinousIntegrationPipeline`
+- For **Jenkins running inside Kubernetes**.  
+- Uses a **Kaniko-based pod template** labeled `docker`.
 
 ---
 
 ## ⚙️ Requirements
 
-- A **Jenkins server** with the Shared Library configured.
-- A **node** (agent) with:
-  - Docker installed
-  - Kubectl installed
-  - Proper node label set in Jenkins
-- For Kubernetes integration:  
+- **Jenkins server** configured with this Shared Library.
+- **Build node (agent)** with:
+  - Docker installed  
+  - Kubectl installed  
+  - Proper Jenkins node label
+- For Kubernetes deployments:
   - Jenkins must have access to the cluster (`kubeconfig` or service account).  
-  - For Kaniko builds, configure a **pod template labeled `docker`** in Jenkins (Cloud section).
+- For Kaniko builds:
+  - Pod template labeled `docker` defined in Jenkins Cloud configuration.
 
 ---
 
 ## 🔑 Credentials
 
-- **Registry Access**: Jenkins credential with ID **`CI_bUILD_Token`** must be created for authentication against the Docker registry.
+- **Registry Access**: Jenkins credential with ID **`CI_bUILD_Token`** is required to push images.
 
 ---
-
 ## 📖 Usage
 
 1. In Jenkins, configure this repository as a **Global Shared Library**.  
@@ -71,4 +88,17 @@ K8SContinuousIntegrationPipeline {
     REGISTRY_URL = 'registry.gitlab.com/my-account/my-folder/my-project_name:my-tag'
     IMAGE_TAG = 'staging'
 }
+```
+
+## 🤝 Contributing
+
+Contributions are welcome!  
+
+## 📜 License
+
+This project is licensed under the **MIT License**.  
+See the [LICENSE](./LICENSE) file for details.
+
+
+
 
