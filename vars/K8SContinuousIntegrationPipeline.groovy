@@ -12,7 +12,7 @@ def call(body) {
 
     /********************** Begining declarative Pipeline **********************************/   
     pipeline {
-        agent {kubernetes{cloud 'Ambohitsirohitra'}}
+        agent {kubernetes{cloud 'my-cluster'}}
         stages {
             stage ('Build image and push to registry'){
                 agent {label 'docker'}
