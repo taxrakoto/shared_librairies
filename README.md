@@ -85,7 +85,7 @@ Centralizes CI/CD workflows so teams can share and maintain pipeline logic consi
 K8SContinuousIntegrationPipeline {
     BUILD_CONTEXT = '.'
     DOCKERFILE = 'Dockerfile'
-    REGISTRY_URL = 'registry.gitlab.com/my-account/my-folder/my-project_name:my-tag'
+    REGISTRY_URL = 'registry.gitlab.com/my-account/my-folder/my-project_name'
     IMAGE_TAG = 'staging'
 }
 ```
